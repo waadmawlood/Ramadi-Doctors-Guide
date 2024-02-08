@@ -17,4 +17,9 @@ class Clinic extends Model
     {
         return $this->attributes['logo'] ?? asset('images/clinic.png');
     }
+
+    public function users(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(User::class)->withPivot(['role', 'notes', 'added_by_id'])->using(ClinicUser::class);
+    }
 }

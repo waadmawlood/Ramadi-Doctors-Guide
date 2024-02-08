@@ -79,4 +79,9 @@ class User extends Authenticatable implements FilamentUser
     {
         return $this->hasMany(User::class, 'parent_id')->select('id', 'name', 'gender', 'phone', 'birthday', 'role');
     }
+
+    public function clinics(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(Clinic::class)->withPivot(['role', 'notes', 'added_by_id'])->using(ClinicUser::class);
+    }
 }
