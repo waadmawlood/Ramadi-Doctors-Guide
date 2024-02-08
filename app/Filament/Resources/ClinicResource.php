@@ -92,6 +92,8 @@ class ClinicResource extends Resource
     {
         return [
             RelationManagers\UsersRelationManager::class,
+            RelationManagers\CategoriesRelationManager::class,
+            RelationManagers\TimesRelationManager::class,
         ];
     }
 

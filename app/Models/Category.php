@@ -12,4 +12,10 @@ class Category extends Model
     protected $casts = [
         'status' => 'boolean',
     ];
+
+    public function clinics(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(Clinic::class)
+            ->using(CategoryClinic::class);
+    }
 }

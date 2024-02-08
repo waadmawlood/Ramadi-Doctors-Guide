@@ -28,11 +28,11 @@ class CategoryResource extends Resource
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('description')
-                    ->maxLength(255)
+                Forms\Components\Textarea::make('description')
+                    ->maxLength(2000)
                     ->columnSpanFull(),
                 Forms\Components\Toggle::make('status')
-                    ->required(),
+                    ->hiddenOn('create'),
             ]);
     }
 
