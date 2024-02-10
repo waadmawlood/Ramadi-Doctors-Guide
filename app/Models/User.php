@@ -67,9 +67,16 @@ class User extends Authenticatable implements FilamentUser
         'birthday' => 'date:Y-m-d',
     ];
 
+    protected $appends = ['image_url'];
+
     public function getImageAttribute()
     {
         return $this->attributes['image'] ?? asset('images/avatar1.png');
+    }
+
+    public function getImageUrlAttribute()
+    {
+        return $this->attributes['image'] ? asset('storage/' . $this->attributes['image']) : asset('images/avatar1.png');
     }
 
     public function parent()

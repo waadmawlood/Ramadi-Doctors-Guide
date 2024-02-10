@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Post;
 use Illuminate\Http\Request;
 
-class HomeController extends Controller
+class ClinicsController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -14,7 +13,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        // $this->middleware('auth');
+
     }
 
     /**
@@ -24,7 +23,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $posts = Post::all()->sortByDesc('created_at');
-        return view('home', compact('posts'));
+        return view('home');
     }
 }
