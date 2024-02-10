@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Enums\Roles;
 use App\Filament\Resources\ClinicResource\Pages;
 use App\Filament\Resources\ClinicResource\RelationManagers;
 use App\Models\Clinic;
@@ -107,5 +108,21 @@ class ClinicResource extends Resource
             'create' => Pages\CreateClinic::route('/create'),
             'edit' => Pages\EditClinic::route('/{record}/edit'),
         ];
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        $role = getRole();
+        if ($role !== Roles::Admin->name) {
+            $clinics = auth()->user()->clinics->pluck('id');
+
+            if (blank($clinics)) {
+                return parent::getEloquentQuery()->where('id', 0);
+            }
+
+            return parent::getEloquentQuery()->whereIn('id', $clinics->toArray());
+        }
+
+        return parent::getEloquentQuery();
     }
 }

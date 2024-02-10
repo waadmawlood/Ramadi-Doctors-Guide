@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Enums\Roles;
 use App\Filament\Resources\PostResource\Pages;
 use App\Filament\Resources\PostResource\RelationManagers;
 use App\Models\Post;
@@ -23,10 +24,16 @@ class PostResource extends Resource
 
     public static function form(Form $form): Form
     {
+        $role = getRole();
         return $form
             ->schema([
                 Forms\Components\Select::make('clinic_id')
                     ->relationship('clinic', 'name')
+                    ->when($role !== Roles::Admin->name, function ($component) {
+                        return $component->options(
+                            auth()->user()->clinics->pluck('name', 'id')->toArray()
+                        );
+                    })
                     ->required(),
                 Forms\Components\TextInput::make('title')
                     ->required()
@@ -74,7 +81,8 @@ class PostResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            RelationManagers\ImagesRelationManager::class,
+            RelationManagers\CommentsRelationManager::class,
         ];
     }
 
@@ -85,5 +93,21 @@ class PostResource extends Resource
             'create' => Pages\CreatePost::route('/create'),
             'edit' => Pages\EditPost::route('/{record}/edit'),
         ];
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        $role = getRole();
+        if ($role !== Roles::Admin->name) {
+            $clinics = auth()->user()->clinics->pluck('id');
+
+            if (blank($clinics)) {
+                return parent::getEloquentQuery()->where('id', 0);
+            }
+
+            return parent::getEloquentQuery()->whereIn('clinic_id', $clinics->toArray());
+        }
+
+        return parent::getEloquentQuery();
     }
 }

@@ -24,6 +24,7 @@ class UserResource extends Resource
 
     public static function form(Form $form): Form
     {
+        $roles = selectRoles();
         return $form
             ->schema([
                 Forms\Components\TextInput::make('name')
@@ -50,8 +51,8 @@ class UserResource extends Resource
                 Forms\Components\DatePicker::make('birthday'),
                 Forms\Components\Select::make('role')
                     ->required()
-                    ->options(array_combine(Roles::names(), Roles::names()))
-                    ->default(Roles::Doctor->name),
+                    ->options(array_combine($roles, $roles))
+                    ->default($roles[0] ?? null),
                 Forms\Components\Toggle::make('is_banned')
                     ->required()
                     ->hiddenOn('create'),
@@ -141,5 +142,21 @@ class UserResource extends Resource
             'create' => Pages\CreateUser::route('/create'),
             'edit' => Pages\EditUser::route('/{record}/edit'),
         ];
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        $role = getRole();
+        if ($role !== Roles::Admin->name) {
+            $clinics = auth()->user()->clinics->pluck('id');
+
+            if (blank($clinics)) {
+                return parent::getEloquentQuery()->where('id', 0);
+            }
+
+            return parent::getEloquentQuery()->whereHas('clinics', fn (Builder $query) => $query->whereIn('clinics.id', $clinics->toArray()));
+        }
+
+        return parent::getEloquentQuery();
     }
 }

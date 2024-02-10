@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Enums\Roles;
 use App\Filament\Resources\CategoryResource\Pages;
 use App\Filament\Resources\CategoryResource\RelationManagers;
 use App\Models\Category;
@@ -20,6 +21,11 @@ class CategoryResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-m-square-3-stack-3d';
 
     protected static ?int $navigationSort = 2;
+
+    public static function shouldRegisterNavigation(): bool
+    {
+        return getRole() === Roles::Admin->name;
+    }
 
     public static function form(Form $form): Form
     {

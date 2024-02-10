@@ -11,6 +11,13 @@ class ClinicObserver
      */
     public function creating(Clinic $clinic): void
     {
+    }
+
+    /**
+     * Handle the Clinic "created" event.
+     */
+    public function created(Clinic $clinic): void
+    {
         $clinic->times()->createMany([
             [
                 'day' => 1,
@@ -34,14 +41,6 @@ class ClinicObserver
                 'day' => 7,
             ],
         ]);
-    }
-
-    /**
-     * Handle the Clinic "created" event.
-     */
-    public function created(Clinic $clinic): void
-    {
-        //
     }
 
     /**

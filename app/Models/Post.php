@@ -22,10 +22,13 @@ class Post extends Model
         return $this->belongsTo(User::class);
     }
 
-    // public function comments(): \Illuminate\Database\Eloquent\Relations\HasMany
-    // {
-    //     return $this->hasMany(Comment::class);
-    // }
+    public function comments(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(PostComment::class);
+    }
 
-
+    public function images(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(PostImage::class);
+    }
 }
