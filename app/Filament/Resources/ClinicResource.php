@@ -60,6 +60,9 @@ class ClinicResource extends Resource
                     ->searchable(),
                 Tables\Columns\ImageColumn::make('logo')
                     ->disk('public'),
+                Tables\Columns\TextColumn::make('rate')
+                    ->label('Rating')
+                    ->color('danger'),
                 Tables\Columns\IconColumn::make('status')
                     ->boolean(),
                 Tables\Columns\TextColumn::make('deleted_at')

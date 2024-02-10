@@ -41,6 +41,8 @@ class User extends Authenticatable implements FilamentUser
         'is_banned',
         'image',
         'parent_id',
+        'category_id',
+        'certificate',
     ];
 
     /**
@@ -83,5 +85,10 @@ class User extends Authenticatable implements FilamentUser
     public function clinics(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
         return $this->belongsToMany(Clinic::class)->withPivot(['role', 'notes', 'added_by_id'])->using(ClinicUser::class);
+    }
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
     }
 }

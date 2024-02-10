@@ -60,6 +60,14 @@ class UserResource extends Resource
                     ->label('Avatar')
                     ->disk('public')
                     ->directory('users'),
+
+                Forms\Components\TextInput::make('certificate'),
+
+                Forms\Components\BelongsToSelect::make('category_id')
+                    ->label('Category')
+                    ->relationship('category', 'name')
+                    ->preload()
+                    ->searchable(),
             ]);
     }
 
@@ -81,7 +89,15 @@ class UserResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('role')
                     ->searchable(),
+                Tables\Columns\TextColumn::make('category.name')
+                    ->label('Category')
+                    ->words(2)
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('certificate')
+                    ->limit(10)
+                    ->searchable(),
                 Tables\Columns\IconColumn::make('is_banned')
+                    ->label('Banned')
                     ->boolean(),
                 Tables\Columns\ImageColumn::make('image')->label('Avatar')
                     ->disk('public'),
