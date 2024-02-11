@@ -19,5 +19,14 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 
+// Post
 Route::get('/', 'HomeController@index')->name('home');
+Route::get('/posts/{post}', 'PostsController@show')->name('posts.show');
+Route::post('/posts/{post}/comment', 'PostsController@comment')->name('posts.comment');
+
+// clinics
 Route::get('/clinics', 'ClinicsController@index')->name('clinics');
+Route::get('/clinics/{clinic}', 'ClinicsController@show')->name('clinics.show');
+Route::post('/clinics/{clinic}/rating/me', 'ClinicsController@ratingClinic')->name('clinics.rating.me');
+
+

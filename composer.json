@@ -16,6 +16,7 @@
         "laravel/sanctum": "^3.3",
         "laravel/tinker": "^2.8",
         "laravel/ui": "^4.4",
+        "nicolaslopezj/searchable": "^1.13",
         "waad/laravel-dynamic-observer": "^1.0"
     },
     "require-dev": {

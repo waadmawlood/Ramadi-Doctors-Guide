@@ -27,6 +27,11 @@ class Post extends Model
         return $this->hasMany(PostComment::class);
     }
 
+    public function commentsVisible(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(PostComment::class)->where('visible', true);
+    }
+
     public function images(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(PostImage::class);
