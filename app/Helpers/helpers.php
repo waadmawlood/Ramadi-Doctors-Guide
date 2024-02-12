@@ -37,6 +37,6 @@ function selectRoles($role = null)
     $roles = Roles::options();
 
     return array_keys(array_filter($roles, function ($value) use ($level) {
-        return $value >= $level;
+        return $level == 3 ? $value >= $level-1 : $value >= $level;
     }));
 }
