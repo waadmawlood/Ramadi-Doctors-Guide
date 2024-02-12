@@ -106,4 +106,9 @@ class Clinic extends Model
     {
         return $this->hasMany(ClinicRate::class)->latest();
     }
+
+    public function bookings(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(ClinicBooking::class);
+    }
 }

@@ -98,4 +98,9 @@ class User extends Authenticatable implements FilamentUser
     {
         return $this->belongsTo(Category::class);
     }
+
+    public function bookings(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(ClinicBooking::class);
+    }
 }

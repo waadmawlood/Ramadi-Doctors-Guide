@@ -58,4 +58,28 @@ class ClinicsController extends Controller
 
         return back();
     }
+
+    public function bookingClinic(Request $request, Clinic $clinic)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'age' => 'required|integer|min:1|max:150',
+            'gender' => 'required|string',
+            'city' => 'required|string',
+        ]);
+
+        if ($clinic->rates()->where('user_id', auth()->id())->exists())
+            return back();
+
+        $clinic->rates()->create([
+            'user_id' => auth()->id(),
+            'clinic' => $clinic->id,
+            'name' => $request->name,
+            'age' => $request->age,
+            'gender' => $request->gender,
+            'city' => $request->city,
+        ]);
+
+        return back();
+    }
 }

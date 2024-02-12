@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\Days;
 use App\Enums\Roles;
 
 function getRole($user = null)
@@ -39,4 +40,9 @@ function selectRoles($role = null)
     return array_keys(array_filter($roles, function ($value) use ($level) {
         return $level == 3 ? $value >= $level-1 : $value >= $level;
     }));
+}
+
+function getDayString(int $day)
+{
+    return Days::tryFrom($day)->name;
 }

@@ -87,6 +87,66 @@
             </div>
         </div>
 
+        {{-- Appointment Booking --}}
+        @auth
+            @if (auth()->user()?->role === 'Customer')
+                <div class="card mt-2 mb-3">
+                    <div class="card-header">
+                        <i class="bi bi-clock-fill"></i> Appointment Booking
+                    </div>
+
+                    <div class="card-footer">
+                        <form action="{{ route('clinics.booking.send', compact('clinic')) }}" method="post" class="d-flex flex-wrap align-items-center">
+                            @if ($errors->any())
+                                <div class="alert alert-danger">
+                                    <ul>
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
+
+                            @csrf
+                            <div class="m-1">
+                                <input type="text" class="form-control" name="name" placeholder="Patient name...">
+                            </div>
+                            <div class="m-1">
+                                <input type="text" class="form-control" name="age" placeholder="Patient Age...">
+                            </div>
+                            <div class="m-1">
+                                <select class="form-select" name="gender">
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                </select>
+                            </div>
+                            <div class="m-1">
+                                <select class="form-select" name="city">
+                                    <option value="الرمادي">الرمادي</option>
+                                    <option value="هيت">هيت</option>
+                                    <option value="الخالدية">الخالدية</option>
+                                    <option value="الحبانية">الحبانية</option>
+                                    <option value="الفلوجة">الفلوجة</option>
+                                    <option value="حصيبة الشرقية">حصيبة الشرقية</option>
+                                    <option value="عامرية الفلوجة">عامرية الفلوجة</option>
+                                    <option value="البغدادي">البغدادي</option>
+                                    <option value="حديثة">حديثة</option>
+                                    <option value="راوة">راوة</option>
+                                    <option value="عنة">عنة</option>
+                                    <option value="القائم">القائم</option>
+                                    <option value="حصيبة">حصيبة</option>
+                                </select>
+                            </div>
+
+                            <div class="m1">
+                                <button type="submit" class="btn btn-info">Booking</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            @endif
+        @endauth
+
         {{-- Rating --}}
         <div class="card mt-2">
             <div class="card-header">
@@ -121,7 +181,7 @@
                             </div>
 
                             <div>
-                                <button type="submit" class="btn btn-primary w-100">Send Rating</button>
+                                <button type="submit" class="btn btn-warning w-100">Send Rating</button>
                             </div>
                         </form>
                     </div>
@@ -145,10 +205,40 @@
                             <div class="ms-auto d-md-flex flex-column">
                                 <span class="text-warning">
                                     @for ($i = 1; $i <= $rate->rate; $i++)
-                                    <i class="bi bi-star-fill"></i>
-                                @endfor
+                                        <i class="bi bi-star-fill"></i>
+                                    @endfor
                                 </span>
                                 <span class="text-muted text-wrap">{{ $rate?->created_at?->diffForHumans() }}</span>
+                            </div>
+                        </div>
+                    @endforeach
+                @endif
+            </div>
+        </div>
+
+        {{-- Times --}}
+        <div class="card mt-2">
+            <div class="card-header">
+                <i class="bi bi-calendar2-date-fill"></i> Times
+            </div>
+
+            <div class="card-footer d-flex flex-column">
+                @if ($clinic->times->count())
+                    @foreach ($clinic->times as $time)
+                        <div class="d-md-flex flex-row align-items-center d-flex py-2 border-top">
+                            <span class="ps-md-2 fw-bolder">{{ $time->day->name }} |</span>
+                            @if ($time->status)
+                                <span class="text-overflow ms-2">
+                                    {{ $time->open?->format('h:i:s a') }} {{ filled($time->close) ? '-' : '' }}
+                                    {{ $time->close?->format('h:i:s a') }}
+                                </span>
+                            @endif
+                            <div class="ms-auto">
+                                @if ($time->status)
+                                    <span class="text-success"><i class="bi bi-check-circle-fill"></i></span>
+                                @else
+                                    <span class="text-danger"><i class="bi bi-x-circle-fill"></i></span>
+                                @endif
                             </div>
                         </div>
                     @endforeach
