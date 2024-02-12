@@ -20,9 +20,9 @@
                     </div>
                     <div class="px-1">
                         <select class="form-select" name="category_id" form="search_clinic">
-                            <option value="">All</option>
+                            <option value="" selected>All</option>
                             @foreach ($categories as $category)
-                                <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                <option value="{{ $category->id }}" {{ request('category_id') == $category->id ? 'selected' : '' }}>{{ $category->name }}</option>
                             @endforeach
                         </select>
                     </div>
