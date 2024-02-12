@@ -34,8 +34,16 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
-                        <li><a class="nav-link" href="{{ route('home') }}"><i class="bi bi-house-fill"></i> Home</a></li>
-                        <li><a class="nav-link" href="{{ route('clinics') }}"><i class="bi bi-hospital-fill"></i> Clinics</a></li>
+                        <li><a class="nav-link" href="{{ route('home') }}"><i class="bi bi-house-fill"></i> Home</a>
+                        </li>
+                        <li><a class="nav-link" href="{{ route('clinics') }}"><i class="bi bi-hospital-fill"></i>
+                                Clinics</a></li>
+                        @auth()
+                            @if (auth()->user()?->role !== \App\Enums\Roles::Customer->name)
+                                <li><a class="btn btn-primary"
+                                        href="{{ route('filament.admin.pages.dashboard') }}">Dashboard</a></li>
+                            @endif
+                        @endauth
                     </ul>
 
                     <!-- Right Side Of Navbar -->

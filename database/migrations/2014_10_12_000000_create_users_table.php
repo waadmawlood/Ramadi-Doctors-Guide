@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\Roles;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -20,7 +21,7 @@ return new class extends Migration
             $table->string('password');
             $table->string('gender')->default('Male');
             $table->date('birthday')->nullable();
-            $table->string('role')->default('customer');
+            $table->string('role')->default(Roles::Customer->name);
             $table->boolean('is_banned')->default(false);
             $table->string('image')->nullable();
             $table->foreignId('parent_id')->nullable()->constrained('users')->nullOnDelete();
