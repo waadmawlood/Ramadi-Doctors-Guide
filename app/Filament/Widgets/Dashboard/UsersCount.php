@@ -2,6 +2,7 @@
 
 namespace App\Filament\Widgets\Dashboard;
 
+use App\Enums\Roles;
 use App\Models\User;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 use Filament\Widgets\StatsOverviewWidget\Card;
@@ -25,6 +26,11 @@ class UsersCount extends BaseWidget
                 ->description('Total number of Banned Users')
                 ->icon('heroicon-s-user-minus')
                 ->color('danger'),
+
+            Stat::make('Doctors Active Count', User::where('is_banned', false)->where('role', Roles::Doctor->name)->count())
+                ->description('Total number of Active Doctors')
+                ->icon('heroicon-s-users')
+                ->color('success'),
         ];
     }
 }

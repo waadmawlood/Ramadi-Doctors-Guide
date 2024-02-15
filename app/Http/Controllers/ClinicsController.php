@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Clinic;
+use App\Models\ClinicBooking;
 use Illuminate\Http\Request;
 
 class ClinicsController extends Controller
@@ -29,15 +30,21 @@ class ClinicsController extends Controller
             ->where('clinics.status', true)
             ->whereHas('usersDoctor')
             ->when($request->filled('search'), fn ($q) => $q->search($request->search, null, true, true))
-            ->when($request->filled('category_id'), fn ($q) => $q->whereHas('categories', fn($query) => $query->where('categories.id', $request->category_id)))
-            ->get();
+            ->when($request->filled('category_id'), fn ($q) => $q->whereHas('categories', fn ($query) => $query->where('categories.id', $request->category_id)))
+            ->get()->sortByDesc('id')->sortByDesc('rate');
 
         return view('clinics', compact('clinics', 'categories'));
     }
 
     public function show(Clinic $clinic)
     {
-        return view('pages.clinic', compact('clinic'));
+        $isBooking = $clinic->bookings()
+            ->where('user_id', auth()->id())
+            ->where('status', false)
+            ->whereBetween('created_at', [now()->subDays(3), now()])
+            ->exists();
+
+        return view('pages.clinic', compact('clinic', 'isBooking'));
     }
 
     public function ratingClinic(Request $request, Clinic $clinic)
@@ -66,20 +73,28 @@ class ClinicsController extends Controller
             'age' => 'required|integer|min:1|max:150',
             'gender' => 'required|string',
             'city' => 'required|string',
+            'number' => 'required|string',
         ]);
 
-        if ($clinic->rates()->where('user_id', auth()->id())->exists())
+        if ($clinic->bookings()->where('user_id', auth()->id())->exists())
             return back();
 
-        $clinic->rates()->create([
+        $clinic->bookings()->create([
             'user_id' => auth()->id(),
-            'clinic' => $clinic->id,
             'name' => $request->name,
             'age' => $request->age,
             'gender' => $request->gender,
             'city' => $request->city,
+            'number' => $request->number,
         ]);
 
         return back();
+    }
+
+    public function indexBookingClinic(Request $request)
+    {
+        // ClinicBooking::query()->where('status', true)->where('seen', false)->where('user_id', auth()->id())->whereNotNull('date_at')->update(['seen' => true]);
+        $bookings = ClinicBooking::query()->where('user_id', auth()->id())->where('status', true)->get();
+        return view('Booking', compact('bookings'));
     }
 }

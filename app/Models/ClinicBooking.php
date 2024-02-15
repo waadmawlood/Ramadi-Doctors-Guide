@@ -11,6 +11,7 @@ class ClinicBooking extends Model
     protected $casts = [
         'date_at' => 'datetime',
         'status' => 'boolean',
+        'seen' => 'boolean',
     ];
 
     public function clinic(): \Illuminate\Database\Eloquent\Relations\BelongsTo

@@ -24,6 +24,7 @@
                                 @for ($i = 1; $i <= $clinic->rate; $i++)
                                     <i class="bi bi-star-fill"></i>
                                 @endfor
+                                ({{ $clinic->rate }})
                             </span>
                         </div>
 
@@ -96,52 +97,103 @@
                     </div>
 
                     <div class="card-footer">
-                        <form action="{{ route('clinics.booking.send', compact('clinic')) }}" method="post" class="d-flex flex-wrap align-items-center">
-                            @if ($errors->any())
-                                <div class="alert alert-danger">
-                                    <ul>
-                                        @foreach ($errors->all() as $error)
-                                            <li>{{ $error }}</li>
-                                        @endforeach
-                                    </ul>
+                        @if ($isBooking)
+                            You have requested an appointment in advance
+                        @else
+                            <form action="{{ route('clinics.booking.send', compact('clinic')) }}" method="post"
+                                class="d-flex flex-wrap align-items-center">
+                                @if ($errors->any())
+                                    <div class="alert alert-danger">
+                                        <ul>
+                                            @foreach ($errors->all() as $error)
+                                                <li>{{ $error }}</li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                @endif
+
+                                @csrf
+                                <div class="m-1">
+                                    <input type="text" class="form-control" name="name" placeholder="Patient name...">
                                 </div>
-                            @endif
+                                <div class="m-1">
+                                    <input type="text" class="form-control" name="age" placeholder="Patient Age...">
+                                </div>
+                                <div class="m-1">
+                                    <input type="text" class="form-control" name="number" placeholder="Number Age...">
+                                </div>
+                                <div class="m-1">
+                                    <select class="form-select" name="gender">
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                    </select>
+                                </div>
+                                <div class="m-1">
+                                    <select class="form-select" name="city">
+                                        <option value="الرمادي">الرمادي</option>
+                                        <option value="هيت">هيت</option>
+                                        <option value="الخالدية">الخالدية</option>
+                                        <option value="الحبانية">الحبانية</option>
+                                        <option value="الفلوجة">الفلوجة</option>
+                                        <option value="حصيبة الشرقية">حصيبة الشرقية</option>
+                                        <option value="عامرية الفلوجة">عامرية الفلوجة</option>
+                                        <option value="البغدادي">البغدادي</option>
+                                        <option value="حديثة">حديثة</option>
+                                        <option value="راوة">راوة</option>
+                                        <option value="عنة">عنة</option>
+                                        <option value="القائم">القائم</option>
+                                        <option value="حصيبة">حصيبة</option>
+                                    </select>
+                                </div>
 
-                            @csrf
-                            <div class="m-1">
-                                <input type="text" class="form-control" name="name" placeholder="Patient name...">
-                            </div>
-                            <div class="m-1">
-                                <input type="text" class="form-control" name="age" placeholder="Patient Age...">
-                            </div>
-                            <div class="m-1">
-                                <select class="form-select" name="gender">
-                                    <option value="Male">Male</option>
-                                    <option value="Female">Female</option>
-                                </select>
-                            </div>
-                            <div class="m-1">
-                                <select class="form-select" name="city">
-                                    <option value="الرمادي">الرمادي</option>
-                                    <option value="هيت">هيت</option>
-                                    <option value="الخالدية">الخالدية</option>
-                                    <option value="الحبانية">الحبانية</option>
-                                    <option value="الفلوجة">الفلوجة</option>
-                                    <option value="حصيبة الشرقية">حصيبة الشرقية</option>
-                                    <option value="عامرية الفلوجة">عامرية الفلوجة</option>
-                                    <option value="البغدادي">البغدادي</option>
-                                    <option value="حديثة">حديثة</option>
-                                    <option value="راوة">راوة</option>
-                                    <option value="عنة">عنة</option>
-                                    <option value="القائم">القائم</option>
-                                    <option value="حصيبة">حصيبة</option>
-                                </select>
-                            </div>
+                                <div class="m-1">
+                                    <button type="submit" class="btn btn-info">Booking</button>
+                                </div>
+                            </form>
+                        @endif
 
-                            <div class="m1">
-                                <button type="submit" class="btn btn-info">Booking</button>
+                        @if ($clinic->bookingsLast5->count())
+                            <div class="my-2 d-md-flex flex-column">
+                                @foreach ($clinic->bookingsLast5 as $booking)
+                                    <div class="py-1 border-top d-md-flex flex-row flex-wrap align-items-center text-center">
+                                        <div class="p-1 col-md-1">
+                                            @if ($booking->status)
+                                                - <i class="bi bi-check-circle-fill text-success"> Success </i>
+                                            @else
+                                                - <i class="bi bi-clock-fill text-warning"> Pending </i>
+                                            @endif
+                                        </div>
+                                        <div class="ms-2 p-1 col-md-2 text-muted border-start">
+                                            @if ($booking->status)
+                                                <span class="text-success">{{ $booking->date_at?->format('d/m h:i A D') }}</span>
+                                            @else
+                                                <span class="text-warning">No Date Yet.!</span>
+                                            @endif
+                                        </div>
+                                        <div class="ms-2 p-1 col-md-3 text-muted border-start">
+                                            <span class="fw-bold">{{ $booking->name }}</span>
+                                        </div>
+                                        <div class="ms-2 p-1 col-md-1 text-muted border-start">
+                                            {{ $booking->age }}
+                                        </div>
+                                        <div class="ms-2 p-1 col-md-1 text-muted border-start">
+                                            {{ $booking->gender }}
+                                        </div>
+                                        <div class="ms-2 p-1 col-md-1 text-muted border-start">
+                                            {{ $booking->city }}
+                                        </div>
+                                        <div class="ms-2 p-1 col-md-2 text-muted border-start">
+                                            {{ $booking->number }}
+                                        </div>
+                                        @if (filled($booking->notes))
+                                            <div class="p-1 col-md-12 text-muted text-start border-bottom">
+                                                <i class="bi bi-card-list"></i> : {{ $booking->notes }}
+                                            </div>
+                                        @endif
+                                    </div>
+                                @endforeach
                             </div>
-                        </form>
+                        @endif
                     </div>
                 </div>
             @endif

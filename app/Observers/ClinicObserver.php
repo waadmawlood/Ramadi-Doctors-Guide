@@ -21,24 +21,45 @@ class ClinicObserver
         $clinic->times()->createMany([
             [
                 'day' => 1,
+                'status' => true,
+                'open' => '15:00:00',
+                'close' => '19:00:00',
             ],
             [
                 'day' => 2,
+                'status' => true,
+                'open' => '15:00:00',
+                'close' => '19:00:00',
             ],
             [
                 'day' => 3,
+                'status' => true,
+                'open' => '15:00:00',
+                'close' => '19:00:00',
             ],
             [
                 'day' => 4,
+                'status' => true,
+                'open' => '15:00:00',
+                'close' => '19:00:00',
             ],
             [
                 'day' => 5,
+                'status' => true,
+                'open' => '15:00:00',
+                'close' => '19:00:00',
             ],
             [
                 'day' => 6,
+                'status' => true,
+                'open' => '15:00:00',
+                'close' => '19:00:00',
             ],
             [
                 'day' => 7,
+                'status' => false,
+                'open' => '15:00:00',
+                'close' => '19:00:00',
             ],
         ]);
     }

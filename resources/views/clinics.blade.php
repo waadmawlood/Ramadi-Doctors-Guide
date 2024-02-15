@@ -3,7 +3,7 @@
 @section('content')
     <div class="container py-4">
         <div class="py-4 d-md-flex flex-row justify-content-between align-items-center flex-wrap">
-            <span class="fs-2">Clinics</span>
+            <span class="fs-2">Clinics ({{ $clinics->count() }})</span>
             <div>
                 <form action="{{ route('clinics') }}" method="get" id="search_clinic" class="row">
 
@@ -46,6 +46,7 @@
                                         @for ($i = 1; $i <= $clinic->rate; $i++)
                                             <i class="bi bi-star-fill"></i>
                                         @endfor
+                                        ({{ $clinic->rate }})
                                     </span>
                                 </div>
                             </a>

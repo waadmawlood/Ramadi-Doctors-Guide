@@ -111,4 +111,14 @@ class Clinic extends Model
     {
         return $this->hasMany(ClinicBooking::class);
     }
+
+    public function bookingsLastSuccess3(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(ClinicBooking::class)->where('user_id', auth()->id())->where('status', true)->latest('date_at')->take(3);
+    }
+
+    public function bookingsLast5(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(ClinicBooking::class)->where('user_id', auth()->id())->latest()->take(5);
+    }
 }

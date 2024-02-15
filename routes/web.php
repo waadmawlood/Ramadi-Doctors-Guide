@@ -29,5 +29,6 @@ Route::get('/clinics', 'ClinicsController@index')->name('clinics');
 Route::get('/clinics/{clinic}', 'ClinicsController@show')->name('clinics.show');
 Route::post('/clinics/{clinic}/rating/me', 'ClinicsController@ratingClinic')->name('clinics.rating.me');
 Route::post('/clinics/{clinic}/booking/send', 'ClinicsController@bookingClinic')->name('clinics.booking.send');
+Route::get('/booking/clinics', 'ClinicsController@indexBookingClinic')->name('clinics.booking.index')->middleware('auth');
 
 

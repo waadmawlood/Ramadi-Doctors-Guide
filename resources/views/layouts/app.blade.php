@@ -80,6 +80,21 @@
                                     </form>
                                 </div>
                             </li>
+                            <li class="nav-item ms-2 p-1">
+                                <a class="btn btn-info position-relative" href="{{ route('clinics.booking.index') }}">
+                                    <i class="bi bi-clock-fill"></i>
+                                    @php
+                                        $countNewBooking = \App\Models\ClinicBooking::query()->where('status', true)->where('seen', false)->where('user_id', auth()->id())->whereNotNull('date_at')->count();
+                                    @endphp
+                                    @if ($countNewBooking)
+                                        <span
+                                            class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                            {{ $countNewBooking }}
+                                            <span class="visually-hidden">unread messages</span>
+                                        </span>
+                                    @endif
+                                </a>
+                            </li>
                         @endguest
                     </ul>
                 </div>

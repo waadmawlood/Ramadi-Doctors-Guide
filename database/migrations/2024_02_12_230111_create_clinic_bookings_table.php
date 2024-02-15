@@ -19,7 +19,10 @@ return new class extends Migration
             $table->string('age');
             $table->string('gender');
             $table->string('city');
+            $table->string('number');
+            $table->string('notes')->nullable();
             $table->boolean('status')->default(false);
+            $table->boolean('seen')->default(false);
             $table->dateTime('date_at')->nullable();
             $table->timestamps();
         });
