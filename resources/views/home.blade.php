@@ -42,11 +42,11 @@
                         </div>
 
                         <div class="card-footer d-flex flex-column">
-                            @if ($post->commentsVisible->count() > 1 || $post->images->count() > 1)
+                            {{-- @if ($post->commentsVisible->count() > 1 || $post->images->count() > 1) --}}
                                 <a class="btn btn-primary p-2" href="{{ route('posts.show', compact('post')) }}">
                                     more...
                                 </a>
-                            @endif
+                            {{-- @endif --}}
 
                             @if ($post->commentsVisible->count())
                                 <p class="m-0 mt-1 text-muted">Last Comment</p>
