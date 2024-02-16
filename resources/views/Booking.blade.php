@@ -9,8 +9,10 @@
         @if ($bookings->count())
             <div class="my-2 d-md-flex flex-column mt-4">
                 @foreach ($bookings as $booking)
-                    <a class="text-decoration-none" href="http://">
-                        <div class="py-1 mb-3 border-top d-md-flex flex-row flex-wrap align-items-center text-center card hover-shadow">
+                    <a class="text-decoration-none"
+                        href="{{ route('clinics.show', ['clinic' => $booking->clinic_id, 'booking_id' => $booking->id]) }}">
+                        <div
+                            class="py-1 mb-3 border-top d-md-flex flex-row flex-wrap align-items-center text-center card hover-shadow" {{ $booking->seen ? null : 'style=background-color:#ececec' }}>
                             <div class="p-1 col-md-1">
                                 @if ($booking->status)
                                     {{ $loop->iteration }}- <i class="bi bi-check-circle-fill text-success"> Success </i>

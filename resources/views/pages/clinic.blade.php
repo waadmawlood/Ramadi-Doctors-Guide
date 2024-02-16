@@ -120,7 +120,7 @@
                                     <input type="text" class="form-control" name="age" placeholder="Patient Age...">
                                 </div>
                                 <div class="m-1">
-                                    <input type="text" class="form-control" name="number" placeholder="Number Age...">
+                                    <input type="text" class="form-control" name="number" placeholder="Patient Number...">
                                 </div>
                                 <div class="m-1">
                                     <select class="form-select" name="gender">
@@ -168,6 +168,12 @@
                                                 <span class="text-success">{{ $booking->date_at?->format('d/m h:i A D') }}</span>
                                             @else
                                                 <span class="text-warning">No Date Yet.!</span>
+
+                                                <form action="{{ route('clinics.booking.delete', compact('booking')) }}" method="post">
+                                                    @csrf
+                                                    @method('delete')
+                                                    <button class="btn btn-danger" href="http://"><i class="bi bi-trash3-fill"></i></button>
+                                                </form>
                                             @endif
                                         </div>
                                         <div class="ms-2 p-1 col-md-3 text-muted border-start">

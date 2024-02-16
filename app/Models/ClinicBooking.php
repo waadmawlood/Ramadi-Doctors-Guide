@@ -3,9 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Waad\Observer\HasObserver;
 
 class ClinicBooking extends Model
 {
+    use HasObserver;
+
     protected $guarded = [];
 
     protected $casts = [

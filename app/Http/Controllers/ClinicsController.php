@@ -38,6 +38,15 @@ class ClinicsController extends Controller
 
     public function show(Clinic $clinic)
     {
+        if (auth()->check() && request()->filled('booking_id')) {
+            ClinicBooking::query()
+                ->where('status', true)
+                ->where('seen', false)
+                ->where('user_id', auth()->id())
+                ->whereNotNull('date_at')
+                ->update(['seen' => true]);
+        }
+
         $isBooking = $clinic->bookings()
             ->where('user_id', auth()->id())
             ->where('status', false)
@@ -93,8 +102,16 @@ class ClinicsController extends Controller
 
     public function indexBookingClinic(Request $request)
     {
-        // ClinicBooking::query()->where('status', true)->where('seen', false)->where('user_id', auth()->id())->whereNotNull('date_at')->update(['seen' => true]);
         $bookings = ClinicBooking::query()->where('user_id', auth()->id())->where('status', true)->get();
         return view('Booking', compact('bookings'));
+    }
+
+    public function deleteBookingClinic(ClinicBooking $booking)
+    {
+        if ($booking->user_id != auth()->id())
+            return back();
+
+        $booking->delete();
+        return back();
     }
 }

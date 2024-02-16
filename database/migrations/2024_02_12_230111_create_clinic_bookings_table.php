@@ -24,6 +24,8 @@ return new class extends Migration
             $table->boolean('status')->default(false);
             $table->boolean('seen')->default(false);
             $table->dateTime('date_at')->nullable();
+            $table->date('date_str')->nullable();
+            $table->time('time_str')->nullable();
             $table->timestamps();
         });
     }

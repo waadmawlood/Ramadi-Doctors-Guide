@@ -29,32 +29,38 @@ class ClinicBookingResource extends Resource
 
     public static function form(Form $form): Form
     {
+
         return $form
             ->schema([
                 Forms\Components\Select::make('clinic_id')
                     ->relationship('clinic', 'name')
-                    ->required(),
-                Forms\Components\Select::make('user_id')
-                    ->relationship('user', 'name')
-                    ->required(),
+                    ->inlineLabel()
+                    ->disabled(),
                 Forms\Components\TextInput::make('name')
-                    ->required()
-                    ->maxLength(255),
+                    ->disabled()
+                    ->inlineLabel()
+                    ->readonly(),
                 Forms\Components\TextInput::make('age')
-                    ->required()
-                    ->maxLength(255),
+                    ->disabled()
+                    ->inlineLabel()
+                    ->readonly(),
                 Forms\Components\TextInput::make('gender')
-                    ->required()
-                    ->maxLength(255),
+                    ->disabled()
+                    ->inlineLabel()
+                    ->readonly(),
                 Forms\Components\TextInput::make('city')
-                    ->required()
-                    ->maxLength(255),
+                    ->disabled()
+                    ->inlineLabel()
+                    ->readonly(),
                 Forms\Components\TextInput::make('number')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\Toggle::make('status')
-                    ->required(),
-                Forms\Components\DateTimePicker::make('date_at'),
+                    ->disabled()
+                    ->inlineLabel()
+                    ->readonly(),
+                Forms\Components\DatePicker::make('date_str')->label('Select Day')
+                    ->inlineLabel(),
+                    Forms\Components\TimePicker::make('time_str')->label('Select Time')
+                    ->inlineLabel()
+                    ->seconds(false),
             ]);
     }
 
@@ -71,7 +77,8 @@ class ClinicBookingResource extends Resource
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('age')
-                    ->searchable(),
+                    ->searchable()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('gender')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('city')
@@ -79,7 +86,8 @@ class ClinicBookingResource extends Resource
                 Tables\Columns\TextColumn::make('number')
                     ->searchable(),
                 Tables\Columns\IconColumn::make('status')
-                    ->boolean(),
+                    ->boolean()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('date_at')
                     ->dateTime()
                     ->sortable(),
@@ -97,6 +105,7 @@ class ClinicBookingResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -116,9 +125,14 @@ class ClinicBookingResource extends Resource
     {
         return [
             'index' => Pages\ListClinicBookings::route('/'),
-            'create' => Pages\CreateClinicBooking::route('/create'),
-            'edit' => Pages\EditClinicBooking::route('/{record}/edit'),
+            // 'create' => Pages\CreateClinicBooking::route('/create'),
+            // 'edit' => Pages\EditClinicBooking::route('/{record}/edit'),
         ];
+    }
+
+    public static function canCreate(): bool
+    {
+        return false;
     }
 
     public static function getEloquentQuery(): Builder
