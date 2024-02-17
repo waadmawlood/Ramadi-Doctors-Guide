@@ -19,7 +19,10 @@ class TimesRelationManager extends RelationManager
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('day')->formatStateUsing(fn ($state): string => Days::tryFrom($state)->name)->disabled(),
+                Forms\Components\TextInput::make('day')
+                    ->formatStateUsing(fn ($state): string => Days::tryFrom($state)->name)
+                    ->columnSpanFull()
+                    ->disabled(),
                 Forms\Components\TimePicker::make('open'),
                 Forms\Components\TimePicker::make('close'),
                 Forms\Components\Toggle::make('status')->required(),

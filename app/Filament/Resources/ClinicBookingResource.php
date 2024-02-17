@@ -19,8 +19,19 @@ class ClinicBookingResource extends Resource
     protected static ?string $model = ClinicBooking::class;
 
     protected static ?string $navigationIcon = 'heroicon-s-clock';
+    protected static ?string $navigationLabel = 'Booking';
 
     protected static ?int $navigationSort = 5;
+
+    public static function getNavigationBadge(): ?string
+    {
+        return self::getEloquentQuery()->where('status', false)->count();
+    }
+
+    public static function getNavigationBadgeColor(): ?string
+{
+    return 'danger';
+}
 
     public static function shouldRegisterNavigation(): bool
     {
@@ -58,7 +69,7 @@ class ClinicBookingResource extends Resource
                     ->readonly(),
                 Forms\Components\DatePicker::make('date_str')->label('Select Day')
                     ->inlineLabel(),
-                    Forms\Components\TimePicker::make('time_str')->label('Select Time')
+                Forms\Components\TimePicker::make('time_str')->label('Select Time')
                     ->inlineLabel()
                     ->seconds(false),
             ]);

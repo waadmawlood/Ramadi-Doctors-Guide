@@ -85,7 +85,7 @@ class ClinicsController extends Controller
             'number' => 'required|string',
         ]);
 
-        if ($clinic->bookings()->where('user_id', auth()->id())->exists())
+        if ($clinic->bookings()->where('user_id', auth()->id())->where('status', false)->whereBetween('created_at', [now()->subDays(3), now()])->exists())
             return back();
 
         $clinic->bookings()->create([

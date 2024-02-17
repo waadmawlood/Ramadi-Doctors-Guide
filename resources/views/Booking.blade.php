@@ -22,7 +22,7 @@
                             </div>
                             <div class="ms-2 p-1 col-md-2 text-muted border-start">
                                 @if ($booking->status)
-                                    <span class="text-success">{{ $booking->date_at?->format('d/m h:i A D') }}</span>
+                                    <span class="text-success">{{ $booking->date_at?->format('d / m h:i A D') }}</span>
                                 @else
                                     <span class="text-warning">No Date Yet.!</span>
                                 @endif
@@ -31,7 +31,7 @@
                                 <span class="fw-bold">{{ $booking->name }}</span>
                             </div>
                             <div class="ms-2 p-1 col-md-1 text-muted border-start">
-                                {{ $booking->age }}
+                                {{ $booking->age }} Years
                             </div>
                             <div class="ms-2 p-1 col-md-1 text-muted border-start">
                                 {{ $booking->gender }}
