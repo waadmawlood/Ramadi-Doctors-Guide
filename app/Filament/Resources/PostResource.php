@@ -39,11 +39,18 @@ class PostResource extends Resource
                     ->required(),
                 Forms\Components\TextInput::make('title')
                     ->required()
+                    ->columnSpanFull()
                     ->maxLength(255),
-                Forms\Components\Textarea::make('body')
+                Forms\Components\RichEditor::make('body')
                     ->required()
                     ->maxLength(65535)
-                    ->columnSpanFull(),
+                    ->columnSpanFull()
+                    ->disableToolbarButtons([
+                        'attachFiles',
+                        'codeBlock',
+                        'h2',
+                        'h3',
+                    ]),
             ]);
     }
 

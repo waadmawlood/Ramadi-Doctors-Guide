@@ -35,7 +35,7 @@
         <div class="d-md-flex flex-row flex-wrap">
             @foreach ($clinics as $clinic)
                 <div class="col-md-6 p-1">
-                    <div class="card h-100">
+                    <div class="card h-100 hover-shadow">
                         <div class="card-header">
                             <a class="text-decoration-none" href="{{ route('clinics.show', compact('clinic')) }}">
 

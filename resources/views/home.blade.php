@@ -26,7 +26,7 @@
                         </a>
                         <div class="card-body">
                             <h5 class="card-title fw-bold">{{ $post->title }}</h5>
-                            <pre class="text-wrap">{{ $post->body }}</pre>
+                            <p class="text-wrap">{!! $post->body !!}</p>
                             @if ($post->images->count())
                                 <img class="img-fluid mt-3" src="{{ asset('storage/' . $post->images->first()->image) }}"
                                     alt="Post Image">

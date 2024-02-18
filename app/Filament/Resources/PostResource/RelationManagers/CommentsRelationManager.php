@@ -18,6 +18,11 @@ class CommentsRelationManager extends RelationManager
     {
         return $form
             ->schema([
+                Forms\Components\Select::make('user.name')
+                    ->relationship('user', 'name')
+                    ->columnSpanFull()
+                    ->disableOptionWhen(true)
+                    ->disabled(),
                 Forms\Components\Textarea::make('comment')->columnSpanFull()->disabledOn('edit'),
                 Forms\Components\Toggle::make('visible')->default(true),
             ]);
@@ -29,6 +34,7 @@ class CommentsRelationManager extends RelationManager
             ->recordTitleAttribute('comment')
             ->columns([
                 Tables\Columns\TextColumn::make('no')->rowIndex(),
+                Tables\Columns\TextColumn::make('user.name')->sortable(),
                 Tables\Columns\TextColumn::make('comment')->searchable(),
                 Tables\Columns\IconColumn::make('visible')->boolean()->sortable(),
             ])
