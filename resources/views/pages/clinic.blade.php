@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container py-4">
-        <h1 class="py-4">
+        <h3 class="py-4">
             <div class="d-md-flex flex-row justify-content-between">
 
                 <div class="fw-bold" role="title">
@@ -11,7 +11,7 @@
 
                 <a href="{{ route('clinics') }}" class="btn btn-outline-primary">Go Clinics</a>
             </div>
-        </h1>
+        </h3>
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
@@ -284,7 +284,7 @@
             <div class="card-header">
                 <i class="bi bi-calendar2-date-fill"></i> Times
             </div>
-            <div class="card-body">
+            <div class="card-footer">
                 @if ($clinic->times->count())
                     <div class="list-group">
                         @foreach ($clinic->times as $time)
@@ -293,14 +293,14 @@
                                     <span class="fw-bold">{{ $time->day->name }}</span>
                                 </div>
                                 @if ($time->status)
-                                    <span class="text-success">
+                                    <span class="badge bg-success fs-6">
                                         {{ $time->open ? $time->open->format('h:i A') : 'Closed' }}
                                         @if ($time->close)
                                             - {{ $time->close->format('h:i A') }}
                                         @endif
                                     </span>
                                 @else
-                                    <span class="text-danger">Closed</span>
+                                    <span class="badge bg-danger fs-6">Closed xxxxxxxxxxxx </span>
                                 @endif
                                 <div>
 
