@@ -1190,7 +1190,7 @@ class DoctorsSeeder extends Seeder
                     'certificate' => 'بكالوريوس طب وجراحة الفم والاسنان',
                 ],
                 'clinic' => [
-                    'name' => 'الدكتور ',
+                    'name' => null,
                     'address' => 'شارع المحافظة القديم - صيدلية قتيبة غازي',
                     'phones' => ['07830735262'],
                 ]

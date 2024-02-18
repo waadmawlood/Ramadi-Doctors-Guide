@@ -26,7 +26,7 @@
                         </a>
                         <div class="card-body">
                             <h5 class="card-title fw-bold">{{ $post->title }}</h5>
-                            <p class="card-text">{{ $post->body }}</p>
+                            <pre class="text-wrap">{{ $post->body }}</pre>
                             @if ($post->images->count())
                                 <img class="img-fluid mt-3" src="{{ asset('storage/' . $post->images->first()->image) }}"
                                     alt="Post Image">
@@ -37,7 +37,7 @@
                             @if ($post->commentsVisible->count())
                                 <div class="mt-3">
                                     <p class="m-0 text-muted">Last Comment</p>
-                                    <div class="p-1 rounded border" style="background-color: #F1F3F5">
+                                    <div class="p-1 rounded border w-100" style="background-color: #F1F3F5">
                                         <div class="d-flex align-items-center">
                                             <img width="30px" height="30px" class="rounded-circle me-2 border"
                                                 src="{{ $post->commentsVisible->last()?->user?->image_url }}"
@@ -53,13 +53,14 @@
                                                     </div>
                                                 </div>
                                                 <div>
-                                                    <span
-                                                        class="ms-2">{{ $post->commentsVisible->last()?->comment }}</span>
+                                                    <span class="ms-2">
+                                                        {{ $post->commentsVisible->last()?->comment }}
+                                                    </span>
                                                 </div>
                                             </div>
-
                                         </div>
                                     </div>
+                                </div>
                             @endif
                         </div>
                     </div>

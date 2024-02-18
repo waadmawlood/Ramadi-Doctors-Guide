@@ -34,6 +34,8 @@ class PostResource extends Resource
                             auth()->user()->clinics->pluck('name', 'id')->toArray()
                         );
                     })
+                    ->searchable()
+                    ->preload()
                     ->required(),
                 Forms\Components\TextInput::make('title')
                     ->required()

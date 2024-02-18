@@ -27,20 +27,35 @@
                         </div>
                     </div>
 
+                    {{-- Information --}}
                     <div class="card-body">
-                        <div class="mb-3"><i class="bi bi-card-text"></i> <strong>Description:</strong>
-                            {{ $clinic->description }}</div>
-                        <div class="mb-3"><i class="bi bi-pin-map-fill"></i> <strong>Address:</strong>
-                            {{ $clinic->address }}</div>
-                        <div><i class="bi bi-telephone-forward-fill"></i> <strong>Phones:</strong>
+                        @if (filled($clinic->description))
+                            <div class="mb-3">
+                                <i class="bi bi-card-text"></i> <strong>Description:</strong>
+                                {{ $clinic->description }}
+                            </div>
+                        @endif
+                        <div class="mb-3">
+                            <i class="bi bi-pin-map-fill"></i> <strong>Address:</strong>
+                            {{ $clinic->address }}
+                        </div>
+                        <div>
+                            <i class="bi bi-telephone-forward-fill"></i> <strong>Phones:</strong>
                             @if (filled($clinic->phones))
                                 {{ implode(' , ', $clinic->phones) }}
                             @else
                                 <span class="text-muted">No Phones</span>
                             @endif
                         </div>
+                        @if (filled($clinic->website))
+                            <div class="mt-3">
+                                <i class="bi bi-box-arrow-up-right"></i> <strong>Link:</strong>
+                                <a href="{{ $clinic->website }}">{{ $clinic->website }}</a>
+                            </div>
+                        @endif
                     </div>
 
+                    {{-- Doctors --}}
                     <div class="card-footer">
                         <h4 class="text-muted"><i class="bi bi-person-hearts"></i> Doctors</h4>
                         @if ($clinic->usersDoctor->where('is_banned', false)->count())
@@ -48,8 +63,8 @@
                                 <div class="d-flex align-items-center mb-2">
                                     <img width="45px" height="45px" class="rounded-circle border me-3"
                                         style="object-fit: cover;" src="{{ $doctor->image_url }}">
-                                    <div>
-                                        {{ $doctor->name }} - {{ $doctor->category?->name }}<br>
+                                    <div class="fw-bold">
+                                        {{ $doctor->name }}<br>
                                         <small>{{ $doctor->certificate }}</small>
                                     </div>
                                 </div>

@@ -7,7 +7,7 @@
                 <div class="fw-bold" role="title">
                     {{ $post->title }}
                 </div>
-                <a href="{{ route('home') }}" class="text-decoration-none">Go Home</a>
+                <a href="{{ route('home') }}" class="btn btn-outline-primary">Go Home</a>
             </div>
         </h1>
         <div class="row">
